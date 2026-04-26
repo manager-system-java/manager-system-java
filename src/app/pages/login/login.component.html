@@ -1,1 +1,30 @@
-<app-default-login-layout></app-default-login-layout>
+<app-default-login-layout
+  title="Faça login na sua conta"
+  primaryBtnText="Entrar"
+  secundaryBtnText="Cadastrar"
+  (submit)="submit()"
+  (navigate)="navigate()"
+  [disablePrimaryBtn]="!loginForm.valid"
+>
+  <form [formGroup]="loginForm" >
+    <app-primary-input
+      formControlName="email"
+      inputName="email"
+      type="email"
+      label="Email"
+      placeholder="exemplo: john@gmail.com"
+    >
+      <img src="/email.svg" alt="" />
+    </app-primary-input>
+
+    <app-primary-input
+      formControlName="password"
+      inputName="password"
+      type="password"
+      label="Senha"
+    >
+      <img src="/cadeado.svg" alt="" />
+    </app-primary-input>
+    <span>Esqueceu a senha?</span>
+  </form>
+</app-default-login-layout>

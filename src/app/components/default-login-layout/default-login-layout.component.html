@@ -1,18 +1,23 @@
 <main>
   <!-- Seção que contem o formulário -->
-  <section>
+  <section class="form-section">
     <img src="/logo.svg" alt="" />
-    <h2></h2>
-    <button></button>
-    <div>
-      <span>Ou</span>
+    <h2>{{ title }}</h2>
+    <ng-content></ng-content>
+    <div class="btn-wrapper">
+      <button class="btn-primary" (click)="submit()" form="loginForm" [disabled]="disablePrimaryBtn">{{ primaryBtnText }}</button>
+      <div class="divider">
+        <div></div>
+        <span>Ou</span>
+        <div></div>
+      </div>
+      <button class="btn-secundary" (click)="navigate()">{{ secundaryBtnText }}</button>
     </div>
-    <button></button>
   </section>
 
   <!-- seção da imagem  -->
-  <section>
-    <h1>Gestão de projetos</h1>
+  <section class="main-section">
+    <h1>Comece a agora!</h1>
     <img src="/main-ilustration.svg" alt="" />
   </section>
 </main>
