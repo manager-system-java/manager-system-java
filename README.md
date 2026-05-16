@@ -1,2 +1,2 @@
-# Sistema de gestão de projetos em JAVA
+# Sistema de gestão de projetos em Java - Parte do Front-end
 
