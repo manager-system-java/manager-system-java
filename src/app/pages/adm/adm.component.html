@@ -1,0 +1,25 @@
+<div class="adm-container">
+  <header class="adm-header">
+    <h1>Painel Administrativo</h1>
+    <p>Gerencie os usuários do sistema</p>
+  </header>
+
+  <div class="users-grid">
+    <div *ngFor="let user of users" class="user-card">
+      <div class="user-info">
+        <h3>{{ user.name }}</h3>
+        <span class="user-email">{{ user.email }}</span>
+        <span class="user-role" [ngClass]="user.role">{{ user.role }}</span>
+      </div>
+      <div class="user-actions">
+        <select (change)="updateRole(user.id, $any($event.target).value)" [value]="user.role">
+          <option value="admin">Admin</option>
+          <option value="gerente">Gerente</option>
+          <option value="colaborador">Colaborador</option>
+        </select>
+        <button class="btn-delete" (click)="deleteUser(user.id)">Deletar</button>
+      </div>
+    </div>
+    <p *ngIf="users.length === 0">Nenhum usuário encontrado.</p>
+  </div>
+</div>

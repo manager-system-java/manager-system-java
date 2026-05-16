@@ -1,0 +1,122 @@
+@import "../../../styles/variables.scss";
+
+* {
+  color: $text-color;
+  box-sizing: border-box;
+}
+
+.adm-container {
+  min-height: 100vh;
+  background-color: $gray-background;
+  padding: 40px;
+}
+
+.adm-header {
+  margin-bottom: 32px;
+
+  h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: $primary-color;
+    margin-bottom: 8px;
+  }
+
+  p {
+    font-size: 14px;
+    color: $text-color;
+  }
+}
+
+.users-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.user-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    h3 {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .user-email {
+      font-size: 13px;
+      color: $text-color;
+    }
+
+    .user-role {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      width: fit-content;
+
+      &.admin {
+        background-color: #ede9fe;
+        color: $primary-color;
+      }
+
+      &.gerente {
+        background-color: #dbeafe;
+        color: #2563eb;
+      }
+
+      &.colaborador {
+        background-color: #dcfce7;
+        color: #16a34a;
+      }
+    }
+  }
+
+  .user-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    select {
+      flex: 1;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      font-size: 14px;
+      cursor: pointer;
+      background-color: white;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+    }
+
+    .btn-delete {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: none;
+      background-color: #fee2e2;
+      color: #dc2626;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      width: auto;
+
+      &:hover {
+        background-color: #fecaca;
+      }
+    }
+  }
+}

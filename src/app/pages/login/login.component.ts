@@ -19,9 +19,7 @@ import { ToastrService } from 'ngx-toastr';
     ReactiveFormsModule,
     PrimaryInputComponent,
   ],
-  providers: [
-    LoginService
-  ],
+  providers: [LoginService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -40,14 +38,26 @@ export class LoginComponent {
       ]),
     });
   }
-  submit(){
-    this.loginService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
-      next:() => this.toastService.success("Login feito com sucesso"),
-      error:() => this.toastService.error("Erro")
-     
-    })
+  submit() {
+    this.loginService
+      .login(this.loginForm.value.email, this.loginForm.value.password)
+      .subscribe({
+        next: () => {
+          this.toastService.success('Login feito com sucesso');
+          const role = sessionStorage.getItem('role');
+          if (role === 'admin') {
+            this.router.navigate(['/adm']);
+          } else if (role === 'gerente') {
+            this.router.navigate(['/projects']);
+          } else {
+            this.router.navigate(['/home']);
+          }
+        },
+
+        error: () => this.toastService.error('Erro'),
+      });
   }
-  navigate(){
-    this.router.navigate(["signup"])
+  navigate() {
+    this.router.navigate(['signup']);
   }
 }
