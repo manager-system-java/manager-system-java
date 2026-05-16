@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProjectService, Project } from '../../services/project.service';
+import { TeamService, Team } from '../../services/team.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -11,13 +13,18 @@ import { ProjectService, Project } from '../../services/project.service';
 })
 export class HomeComponent implements OnInit {
   projects: Project[] = [];
+  teams: Team[] = [];
   username: string = '';
 
-  constructor(private projectService: ProjectService) {}
+  constructor(
+    private projectService: ProjectService,
+    private teamService: TeamService
+  ) {}
 
   ngOnInit() {
     this.username = sessionStorage.getItem('username') || '';
     this.loadProjects();
+    this.loadTeams();
   }
 
   loadProjects() {
@@ -27,9 +34,16 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  loadTeams() {
+    this.teamService.getTeams().subscribe({
+      next: (data) => this.teams = data,
+      error: (err) => console.error(err)
+    });
+  }
+
   joinProject(projectId: number) {
     this.projectService.joinProject(projectId).subscribe({
-      next: () => alert('Afiliado ao projeto com sucesso!'),
+      next: () => this.loadProjects(),
       error: (err) => console.error(err)
     });
   }
