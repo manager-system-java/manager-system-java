@@ -1,5 +1,8 @@
 <div class="container">
-  <h2>Bem-vindo, {{ username }}!</h2>
+  <div class="header">
+    <h2>Bem-vindo, {{ username }}!</h2>
+    <button class="btn-logout" (click)="logout()">Sair</button>
+  </div>
 
   <div class="list">
     <h3>Projetos disponíveis</h3>
@@ -12,7 +15,7 @@
       <div *ngIf="project.members.length > 0">
         <p>Membros: {{ project.members.join(', ') }}</p>
       </div>
-      <button (click)="joinProject(project.id)">Participar</button>
+      <button (click)="requestAffiliation(project.id)">Solicitar participação</button>
     </div>
     <p *ngIf="projects.length === 0">Nenhum projeto disponível.</p>
   </div>

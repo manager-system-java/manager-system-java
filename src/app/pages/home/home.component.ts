@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { ProjectService, Project } from '../../services/project.service';
 import { TeamService, Team } from '../../services/team.service';
-import { DatePipe } from '@angular/common';
-
+import { AffiliationService } from '../../services/affiliation.service';
+import { Router } from '@angular/router';
+import { LoginService } from '../../services/login.service';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, DatePipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -18,7 +20,10 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private projectService: ProjectService,
-    private teamService: TeamService
+    private teamService: TeamService,
+    private affiliationService: AffiliationService,
+    private loginService: LoginService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -41,10 +46,15 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  joinProject(projectId: number) {
-    this.projectService.joinProject(projectId).subscribe({
-      next: () => this.loadProjects(),
+  requestAffiliation(projectId: number) {
+    this.affiliationService.requestAffiliation(projectId).subscribe({
+      next: () => alert('Solicitação enviada! Aguarde aprovação do gerente.'),
       error: (err) => console.error(err)
     });
+  }
+
+  logout() {
+    this.loginService.logout();
+    this.router.navigate(['/login']);
   }
 }

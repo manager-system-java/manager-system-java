@@ -2,8 +2,7 @@
   <header class="adm-header">
     <h1>Painel Administrativo</h1>
     <p>Gerencie os usuários do sistema</p>
-  </header>
-
+      <button class="btn-logout" (click)="logout()">Sair</button>
   <div class="users-grid">
     <div *ngFor="let user of users" class="user-card">
       <div class="user-info">
@@ -22,4 +21,3 @@
     </div>
     <p *ngIf="users.length === 0">Nenhum usuário encontrado.</p>
   </div>
-</div>

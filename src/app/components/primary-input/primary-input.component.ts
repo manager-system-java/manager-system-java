@@ -6,7 +6,7 @@ import {
 } from '@angular/forms';
 import { ɵEmptyOutletComponent } from '@angular/router';
 
-type InputTypes = 'text' | 'email' | 'password';
+type InputTypes = 'text' | 'email' | 'password' | 'cpf';
 
 @Component({
   selector: 'app-primary-input',

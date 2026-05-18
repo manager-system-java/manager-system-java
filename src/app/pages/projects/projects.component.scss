@@ -17,6 +17,30 @@
   }
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.btn-logout {
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background-color: white;
+  color: $text-color;
+  font-size: 14px;
+  cursor: pointer;
+  width: auto;
+
+  &:hover {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border-color: #fecaca;
+  }
+}
+
 .form {
   background-color: white;
   border-radius: 12px;
@@ -64,6 +88,7 @@
 }
 
 .list {
+  margin-top: 32px;
   h3 {
     font-size: 18px;
     font-weight: bold;
@@ -101,5 +126,45 @@
     padding: 4px 10px;
     border-radius: 20px;
     width: fit-content;
+  }
+
+ 
+
+  .btn-approve {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    background-color: #dcfce7;
+    color: #16a34a;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    width: auto;
+  
+    &:hover {
+      background-color: #bbf7d0;
+    }
+  }
+  
+  .btn-reject {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    background-color: #fee2e2;
+    color: #dc2626;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    width: auto;
+  
+    &:hover {
+      background-color: #fecaca;
+    }
+  }
+  
+  .user-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
   }
 }

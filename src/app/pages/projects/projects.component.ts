@@ -1,20 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProjectService, Project } from '../../services/project.service';
 import { TeamService, Team } from '../../services/team.service';
-import { DatePipe } from '@angular/common';
+import { AffiliationService, AffiliationRequest } from '../../services/affiliation.service';
+import { Router } from '@angular/router';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, DatePipe],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
 })
 export class ProjectsComponent implements OnInit {
   projects: Project[] = [];
   teams: Team[] = [];
+  pendingRequests: AffiliationRequest[] = [];
+  username: string = '';
 
   projectName: string = '';
   projectDescription: string = '';
@@ -30,12 +34,17 @@ export class ProjectsComponent implements OnInit {
 
   constructor(
     private projectService: ProjectService,
-    private teamService: TeamService
+    private teamService: TeamService,
+    private affiliationService: AffiliationService,
+    private loginService: LoginService,
+    private router: Router
   ) {}
 
   ngOnInit() {
+    this.username = sessionStorage.getItem('username') || '';
     this.loadProjects();
     this.loadTeams();
+    this.loadPendingRequests();
   }
 
   loadProjects() {
@@ -48,6 +57,13 @@ export class ProjectsComponent implements OnInit {
   loadTeams() {
     this.teamService.getTeams().subscribe({
       next: (data) => this.teams = data,
+      error: (err) => console.error(err)
+    });
+  }
+
+  loadPendingRequests() {
+    this.affiliationService.getPendingRequests().subscribe({
+      next: (data) => this.pendingRequests = data,
       error: (err) => console.error(err)
     });
   }
@@ -95,5 +111,26 @@ export class ProjectsComponent implements OnInit {
       },
       error: (err) => console.error(err)
     });
+  }
+
+  approveRequest(requestId: number) {
+    this.affiliationService.approveRequest(requestId).subscribe({
+      next: () => {
+        this.loadPendingRequests();
+        this.loadProjects();
+      },
+      error: (err) => console.error(err)
+    });
+  }
+
+  rejectRequest(requestId: number) {
+    this.affiliationService.rejectRequest(requestId).subscribe({
+      next: () => this.loadPendingRequests(),
+      error: (err) => console.error(err)
+    });
+  }
+  logout() {
+    this.loginService.logout();
+    this.router.navigate(['/login']);
   }
 }

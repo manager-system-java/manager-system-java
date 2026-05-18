@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 
 interface SignupForm {
   name: FormControl,
+  cpf: FormControl,
   email: FormControl,
   password: FormControl,
   passwordConfirm: FormControl
@@ -39,6 +40,7 @@ export class SignupComponent {
   ) {
     this.signupForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      cpf: new FormControl ('', [Validators.required, Validators.minLength(11)] ),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
         Validators.required,
@@ -52,7 +54,7 @@ export class SignupComponent {
   }
   submit() {
     this.loginService
-      .signup(this.signupForm.value.name, this.signupForm.value.email, this.signupForm.value.password)
+      .signup(this.signupForm.value.name, this.signupForm.value.email, this.signupForm.value.password, this.signupForm.value.cpf)
       .subscribe({
         next: () => this.toastService.success('Login feito com sucesso'),
         error: () => this.toastService.error('Erro'),

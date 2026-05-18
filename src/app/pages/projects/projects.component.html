@@ -1,6 +1,10 @@
 <div class="container">
+ <div class="header">
+    <h2>Bem-vindo, {{ username }}!</h2>
+    <button class="btn-logout" (click)="logout()">Sair</button>
+  </div> 
   <h2>Gerenciar Projetos</h2>
-
+  
   <div class="form">
     <h3>Criar novo projeto</h3>
     <input [(ngModel)]="projectName" placeholder="Nome do projeto" />
@@ -61,5 +65,17 @@
       <p *ngIf="team.projects.length === 0">Nenhum projeto vinculado.</p>
     </div>
     <p *ngIf="teams.length === 0">Nenhuma equipe criada ainda.</p>
+  </div>
+  <div class="list">
+    <h3>Solicitações Pendentes</h3>
+    <div *ngFor="let request of pendingRequests" class="project-card">
+      <h4>{{ request.userName }}</h4>
+      <p>Projeto: {{ request.projectName }}</p>
+      <div class="user-actions">
+        <button class="btn-approve" (click)="approveRequest(request.id)">Aprovar</button>
+        <button class="btn-reject" (click)="rejectRequest(request.id)">Rejeitar</button>
+      </div>
+    </div>
+    <p *ngIf="pendingRequests.length === 0">Nenhuma solicitação pendente.</p>
   </div>
 </div>
