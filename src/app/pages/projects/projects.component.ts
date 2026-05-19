@@ -6,6 +6,7 @@ import { TeamService, Team } from '../../services/team.service';
 import { AffiliationService, AffiliationRequest } from '../../services/affiliation.service';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-projects',
@@ -37,7 +38,8 @@ export class ProjectsComponent implements OnInit {
     private teamService: TeamService,
     private affiliationService: AffiliationService,
     private loginService: LoginService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -50,24 +52,24 @@ export class ProjectsComponent implements OnInit {
   loadProjects() {
     this.projectService.getProjects().subscribe({
       next: (data) => this.projects = data,
-      error: (err) => console.error(err)
+      error: () => this.toastr.error('Erro ao carregar projetos')
     });
   }
-
+  
   loadTeams() {
     this.teamService.getTeams().subscribe({
       next: (data) => this.teams = data,
-      error: (err) => console.error(err)
+      error: () => this.toastr.error('Erro ao carregar equipes')
     });
   }
-
+  
   loadPendingRequests() {
     this.affiliationService.getPendingRequests().subscribe({
       next: (data) => this.pendingRequests = data,
-      error: (err) => console.error(err)
+      error: () => this.toastr.error('Erro ao carregar solicitações')
     });
   }
-
+  
   createProject() {
     if (!this.projectName || !this.projectDescription || !this.projectStartDate || !this.projectEndDate || !this.projectManagerId) return;
     this.projectService.createProject(
@@ -78,6 +80,7 @@ export class ProjectsComponent implements OnInit {
       this.projectManagerId
     ).subscribe({
       next: () => {
+        this.toastr.success('Projeto criado com sucesso!');
         this.projectName = '';
         this.projectDescription = '';
         this.projectStartDate = '';
@@ -85,48 +88,54 @@ export class ProjectsComponent implements OnInit {
         this.projectManagerId = null;
         this.loadProjects();
       },
-      error: (err) => console.error(err)
+      error: () => this.toastr.error('Erro ao criar projeto')
     });
   }
-
+  
   createTeam() {
     if (!this.teamName || !this.teamDescription) return;
     this.teamService.createTeam(this.teamName, this.teamDescription, []).subscribe({
       next: () => {
+        this.toastr.success('Equipe criada com sucesso!');
         this.teamName = '';
         this.teamDescription = '';
         this.loadTeams();
       },
-      error: (err) => console.error(err)
+      error: () => this.toastr.error('Erro ao criar equipe')
     });
   }
-
+  
   linkTeamToProject() {
     if (!this.selectedTeamId || !this.selectedProjectId) return;
     this.teamService.addProjectToTeam(this.selectedTeamId, this.selectedProjectId).subscribe({
       next: () => {
+        this.toastr.success('Equipe vinculada ao projeto!');
         this.selectedTeamId = null;
         this.selectedProjectId = null;
         this.loadTeams();
       },
-      error: (err) => console.error(err)
+      error: () => this.toastr.error('Erro ao vincular equipe')
     });
   }
-
+  
   approveRequest(requestId: number) {
     this.affiliationService.approveRequest(requestId).subscribe({
       next: () => {
+        this.toastr.success('Solicitação aprovada!');
         this.loadPendingRequests();
         this.loadProjects();
       },
-      error: (err) => console.error(err)
+      error: () => this.toastr.error('Erro ao aprovar solicitação')
     });
   }
-
+  
   rejectRequest(requestId: number) {
     this.affiliationService.rejectRequest(requestId).subscribe({
-      next: () => this.loadPendingRequests(),
-      error: (err) => console.error(err)
+      next: () => {
+        this.toastr.success('Solicitação rejeitada!');
+        this.loadPendingRequests();
+      },
+      error: () => this.toastr.error('Erro ao rejeitar solicitação')
     });
   }
   logout() {

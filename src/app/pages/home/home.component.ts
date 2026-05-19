@@ -6,6 +6,8 @@ import { TeamService, Team } from '../../services/team.service';
 import { AffiliationService } from '../../services/affiliation.service';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -23,7 +25,8 @@ export class HomeComponent implements OnInit {
     private teamService: TeamService,
     private affiliationService: AffiliationService,
     private loginService: LoginService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -35,21 +38,21 @@ export class HomeComponent implements OnInit {
   loadProjects() {
     this.projectService.getProjects().subscribe({
       next: (data) => this.projects = data,
-      error: (err) => console.error(err)
+      error: (err) => this.toastr.error('Erro ao carregar projetos')
     });
   }
 
   loadTeams() {
     this.teamService.getTeams().subscribe({
       next: (data) => this.teams = data,
-      error: (err) => console.error(err)
+      error: (err) => this.toastr.error('Erro ao carregar equipes')
     });
   }
 
   requestAffiliation(projectId: number) {
     this.affiliationService.requestAffiliation(projectId).subscribe({
-      next: () => alert('Solicitação enviada! Aguarde aprovação do gerente.'),
-      error: (err) => console.error(err)
+      next: () => this.toastr.success('Solicitação enviada! Aguarde aprovação do gerente.'),
+      error: () => this.toastr.error('Erro ao enviar solicitação')
     });
   }
 

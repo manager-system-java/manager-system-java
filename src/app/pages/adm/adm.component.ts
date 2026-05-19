@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AdmService, UserAdmin } from '../../services/adm.services';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-adm',
@@ -14,8 +15,12 @@ import { LoginService } from '../../services/login.service';
 export class AdmComponent implements OnInit {
   users: UserAdmin[] = [];
 
-  constructor(private admService: AdmService, private loginService: LoginService,
-    private router: Router) {}
+  constructor(
+    private admService: AdmService,
+    private loginService: LoginService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
     this.loadUsers();
@@ -24,23 +29,30 @@ export class AdmComponent implements OnInit {
   loadUsers() {
     this.admService.getUsers().subscribe({
       next: (data) => this.users = data,
-      error: (err) => console.error(err)
+      error: () => this.toastr.error('Erro ao carregar usuários')
     });
   }
 
   updateRole(id: number, role: string) {
     this.admService.updateRole(id, role).subscribe({
-      next: () => this.loadUsers(),
-      error: (err) => console.error(err)
+      next: () => {
+        this.toastr.success('Role atualizada com sucesso!');
+        this.loadUsers();
+      },
+      error: () => this.toastr.error('Erro ao atualizar role')
     });
   }
 
   deleteUser(id: number) {
     this.admService.deleteUser(id).subscribe({
-      next: () => this.loadUsers(),
-      error: (err) => console.error(err)
+      next: () => {
+        this.toastr.success('Usuário deletado com sucesso!');
+        this.loadUsers();
+      },
+      error: () => this.toastr.error('Erro ao deletar usuário')
     });
   }
+
   logout() {
     this.loginService.logout();
     this.router.navigate(['/login']);
