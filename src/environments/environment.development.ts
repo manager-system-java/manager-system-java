@@ -1,4 +1,4 @@
 export const environment = {
 production: true,
-apiUrl: "https://google.com.br"
+apiUrl: "manager-system-java-backend-api-production.up.railway.app"
 };
