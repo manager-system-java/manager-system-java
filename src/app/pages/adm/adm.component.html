@@ -1,8 +1,10 @@
 <div class="adm-container">
   <header class="adm-header">
-    <h1>Painel Administrativo</h1>
-    <p>Gerencie os usuários do sistema</p>
+    <div>    <h1>Painel Administrativo</h1> 
+    <p>Gerencie os usuários do sistema</p></div>
       <button class="btn-logout" (click)="logout()">Sair</button>
+    </header>
+   
   <div class="users-grid">
     <div *ngFor="let user of users" class="user-card">
       <div class="user-info">

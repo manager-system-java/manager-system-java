@@ -4,7 +4,6 @@ import {
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { ɵEmptyOutletComponent } from '@angular/router';
 
 type InputTypes = 'text' | 'email' | 'password' | 'cpf';
 
@@ -33,8 +32,23 @@ export class PrimaryInputComponent implements ControlValueAccessor {
   onTouched: any = () => {};
 
   onInput(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
+    let value = (event.target as HTMLInputElement).value;
+
+    if (this.type === 'cpf') {
+      value = this.formatCpf(value);
+      (event.target as HTMLInputElement).value = value;
+    }
+
     this.onChange(value);
+  }
+
+  formatCpf(value: string): string {
+    value = value.replace(/\D/g, '');
+    if (value.length > 11) value = value.slice(0, 11);
+    if (value.length > 9) return value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    if (value.length > 6) return value.replace(/(\d{3})(\d{3})(\d{3})/, '$1.$2.$3');
+    if (value.length > 3) return value.replace(/(\d{3})(\d{3})/, '$1.$2');
+    return value;
   }
 
   writeValue(value: any): void {
