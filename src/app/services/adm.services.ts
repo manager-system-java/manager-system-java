@@ -9,7 +9,7 @@ export interface UserAdmin {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AdmService {
   apiUrl: string = `${environment.apiUrl}/adm`;
@@ -21,10 +21,16 @@ export class AdmService {
   }
 
   updateRole(id: number, role: string) {
-    return this.httpClient.put(`${this.apiUrl}/users/${id}/role`, { role }, { responseType: 'text' });
+    return this.httpClient.put(
+      `${this.apiUrl}/users/${id}/role`,
+      { role },
+      { responseType: 'text' }
+    );
   }
 
   deleteUser(id: number) {
-    return this.httpClient.delete(`${this.apiUrl}/users/${id}`, { responseType: 'text' });
+    return this.httpClient.delete(`${this.apiUrl}/users/${id}`, {
+      responseType: 'text',
+    });
   }
 }
