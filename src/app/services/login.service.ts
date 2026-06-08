@@ -14,7 +14,7 @@ export class LoginService {
 
   login(email: string, password: string) {
     return this.httpClient
-      .post<LoginResponse>(this.apiUrl + '/login', { email, password })
+      .post<LoginResponse>(this.apiUrl + "/login", { email, password })
       .pipe(
         tap((value) => {
           sessionStorage.setItem('auth-token', value.token);
@@ -24,14 +24,10 @@ export class LoginService {
       );
   }
 
+
   signup(name: string, email: string, password: string, cpf: string) {
     return this.httpClient
-      .post<LoginResponse>(this.apiUrl + '/register', {
-        name,
-        email,
-        password,
-        cpf,
-      })
+      .post<LoginResponse>(this.apiUrl + "/register", {name, email, password, cpf })
       .pipe(
         tap((value) => {
           sessionStorage.setItem('auth-token', value.token);
@@ -43,4 +39,5 @@ export class LoginService {
   logout() {
     sessionStorage.clear();
   }
+  
 }
