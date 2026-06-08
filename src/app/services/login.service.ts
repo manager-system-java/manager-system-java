@@ -2,18 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginResponse } from '../types/login-response.type';
 import { tap } from 'rxjs';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  apiUrl: string = 'http://localhost:8080/auth';
+  apiUrl: string = `${environment.apiUrl}/teams`;
 
   constructor(private httpClient: HttpClient) {}
 
   login(email: string, password: string) {
     return this.httpClient
-      .post<LoginResponse>(this.apiUrl + "/login", { email, password })
+      .post<LoginResponse>(this.apiUrl + '/login', { email, password })
       .pipe(
         tap((value) => {
           sessionStorage.setItem('auth-token', value.token);
@@ -23,10 +24,14 @@ export class LoginService {
       );
   }
 
-
   signup(name: string, email: string, password: string, cpf: string) {
     return this.httpClient
-      .post<LoginResponse>(this.apiUrl + "/register", {name, email, password, cpf })
+      .post<LoginResponse>(this.apiUrl + '/register', {
+        name,
+        email,
+        password,
+        cpf,
+      })
       .pipe(
         tap((value) => {
           sessionStorage.setItem('auth-token', value.token);
@@ -38,5 +43,4 @@ export class LoginService {
   logout() {
     sessionStorage.clear();
   }
-  
 }

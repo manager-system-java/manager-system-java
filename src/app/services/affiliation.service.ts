@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment.development';
 
 export interface AffiliationRequest {
   id: number;
@@ -12,7 +13,7 @@ export interface AffiliationRequest {
   providedIn: 'root'
 })
 export class AffiliationService {
-  apiUrl: string = 'http://localhost:8080/affiliations';
+  apiUrl: string = `${environment.apiUrl}/affiliations`;
 
   constructor(private httpClient: HttpClient) {}
 

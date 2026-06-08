@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {  environment } from '../../environments/environment.development';
 
 export interface Team {
   id: number;
@@ -13,7 +14,7 @@ export interface Team {
   providedIn: 'root'
 })
 export class TeamService {
-  apiUrl: string = 'http://localhost:8080/teams';
+  apiUrl: string = `${environment.apiUrl}/teams`;
 
   constructor(private httpClient: HttpClient) {}
 

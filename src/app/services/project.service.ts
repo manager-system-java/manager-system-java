@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment.development';
 
 export interface Project {
   id: number;
@@ -16,7 +17,7 @@ export interface Project {
   providedIn: 'root'
 })
 export class ProjectService {
-  apiUrl: string = 'http://localhost:8080/projects';
+  apiUrl: string = `${environment.apiUrl}/projects`;
 
   constructor(private httpClient: HttpClient) {}
 

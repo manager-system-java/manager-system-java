@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { environment } from '../../environments/environment.development';
 export interface UserAdmin {
   id: number;
   name: string;
@@ -12,7 +12,7 @@ export interface UserAdmin {
   providedIn: 'root'
 })
 export class AdmService {
-  apiUrl: string = 'http://localhost:8080/adm';
+  apiUrl: string = `${environment.apiUrl}/adm`;
 
   constructor(private httpClient: HttpClient) {}
 
