@@ -20,3 +20,7 @@ Acesse `http://localhost:4200`
 ## 📄 Documentação completa
  
 [Clique aqui para acessar](https://github.com/manager-system-java/project-docs)
+
+## Deploy:
+[Rocket Manager](https://gestao-de-projetos.netlify.app/)
+
